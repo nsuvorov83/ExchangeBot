@@ -1,0 +1,34 @@
+version: '2'
+
+services: 
+    db:
+        image: mysql
+        volumes:
+            - /var/lib/mysql
+        restart: always
+        environment:
+            MYSQL_ROOT_PASSWORD: u12345
+            MYSQL_DATABASE: exchange_bot
+            MYSQL_USER: exbot
+            MYSQL_PASSWORD: u12345
+        ports:
+            - 8306:3306
+    phpMyAdmin:
+        depends_on:
+            - db
+        image: phpmyadmin/phpmyadmin
+        links:
+            - db:db
+        ports:
+            - 8087:80
+    db_manager:
+        image: reduardo7/db-to-api
+        environment:
+            DB_HOST: "db-host"
+            DB_USER: "root"
+            DB_PASS: "u12345"
+            DB_DATABASE: "exchange_bot"
+        links:
+            - db:db-host
+        ports:
+            - 8086:3000
