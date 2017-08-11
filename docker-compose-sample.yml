@@ -1,0 +1,49 @@
+version: '2'
+
+services: 
+    db:
+        image: mysql
+        volumes:
+            - /var/lib/mysql
+        restart: always
+        environment:
+            MYSQL_ROOT_PASSWORD: DATABASE_ROOT_PASS
+            MYSQL_DATABASE: exchange_bot
+            MYSQL_USER: DATABASE_USER
+            MYSQL_PASSWORD: DATABASE_PASS
+        ports:
+            - 8306:3306
+    phpMyAdmin:
+        depends_on:
+            - db
+        image: phpmyadmin/phpmyadmin
+        links:
+            - db:db
+        ports:
+            - 8087:80
+    db_manager:
+        image: reduardo7/db-to-api
+        environment:
+            DB_HOST: "db-host"
+            DB_USER: "DATABASE_USER"
+            DB_PASS: "DATABASE_PASS"
+            DB_DATABASE: "exchange_bot"
+        links:
+            - db:db-host
+        ports:
+            - 8086:3000
+    bot:
+        build:
+            context: .
+            dockerfile: df.base
+        image: deb:base
+        container_name: bot
+        environment:
+            NODE_ENV: "development"
+        volumes:
+            - ./bot_manager_telegram:/home/deb/app
+        command: nodemon --legacy-watch --inspect=0.0.0.0:9229  #Important! Use 0.0.0.0 host if run in docker. Default 127.0.0.1 is wrong!
+        links:
+            - db_manager:db_manager
+        ports:
+            - 9229:9229 #Debug port

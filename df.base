@@ -1,0 +1,22 @@
+FROM node
+MAINTAINER Nikolay Suvorov
+
+#Use Yarn to simple install modules
+RUN curl -o- -L https://yarnpkg.com/install.sh | bash
+
+
+
+#deb - simple docker-example-basic shorten
+RUN mkdir -p /home/deb
+
+WORKDIR /home/deb
+
+ADD ./bot_manager_telegram/package.json /home/deb/package.json
+
+#Modules are installed into /home/deb (mounted volume will be on /home/deb/app)
+RUN $HOME/.yarn/bin/yarn install
+
+RUN npm install --production
+RUN npm install -g nodemon
+
+WORKDIR /home/deb/app

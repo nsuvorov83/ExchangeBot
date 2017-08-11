@@ -1,0 +1,14 @@
+{
+  "name": "exchange",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "GPL-3.0",
+  "scripts": {
+    "bot": "node index.js"
+  },
+  "dependencies": {
+    "express": "^4.15.4",
+    "inspector": "^0.5.0",
+    "telegraf": "^3.9.0"
+  }
+}
