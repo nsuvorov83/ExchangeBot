@@ -360,8 +360,6 @@
     var url = this.buildUrl(path, pathParams);
     var request = superagent(httpMethod, url);
 
-    //console.log(request)
-
     // apply authentications
     this.applyAuthToRequest(request, authNames);
 
@@ -385,7 +383,6 @@
     }
 
     if (contentType === 'application/x-www-form-urlencoded') {
-      //console.log(formParams)
       request.send(this.normalizeParams(formParams));
     } else if (contentType == 'multipart/form-data') {
       var _formParams = this.normalizeParams(formParams);

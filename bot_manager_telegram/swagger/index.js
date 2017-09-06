@@ -25,12 +25,12 @@
 (function(factory) {
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
-    define(['ApiClient', 'model/User', 'api/UsersApi'], factory);
+    define(['ApiClient', 'model/GetResponse', 'model/User', 'api/IssuersApi', 'api/UsersApi'], factory);
   } else if (typeof module === 'object' && module.exports) {
     // CommonJS-like environments that support module.exports, like Node.
-    module.exports = factory(require('./ApiClient'), require('./model/User'), require('./api/UsersApi'));
+    module.exports = factory(require('./ApiClient'), require('./model/GetResponse'), require('./model/User'), require('./api/IssuersApi'), require('./api/UsersApi'));
   }
-}(function(ApiClient, User, UsersApi) {
+}(function(ApiClient, GetResponse, User, IssuersApi, UsersApi) {
   'use strict';
 
   /**
@@ -71,10 +71,20 @@
      */
     ApiClient: ApiClient,
     /**
+     * The GetResponse model constructor.
+     * @property {module:model/GetResponse}
+     */
+    GetResponse: GetResponse,
+    /**
      * The User model constructor.
      * @property {module:model/User}
      */
     User: User,
+    /**
+     * The IssuersApi service constructor.
+     * @property {module:api/IssuersApi}
+     */
+    IssuersApi: IssuersApi,
     /**
      * The UsersApi service constructor.
      * @property {module:api/UsersApi}
